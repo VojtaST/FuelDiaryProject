@@ -1,1 +1,35 @@
-<p>carform works!</p>
+<mat-card>
+  <mat-card-title>{{title}}</mat-card-title>
+
+  <form [formGroup]="reactiveForm" (ngSubmit)="addCar(reactiveForm.value)">
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Name of the Car:</mat-label>
+        <input matInput id="nameOfCar" formControlName="nameOfCar">
+      </mat-form-field>
+    </mat-card-content>
+    <br>
+    <span style="color:red;" *ngIf="nameOfCar && nameOfCar.invalid && nameOfCar.touched">Car name is not valid</span>
+    <br>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Licence Plate:</mat-label>
+        <input matInput id="licencePlate" formControlName="licencePlate"><br>
+      </mat-form-field>
+    </mat-card-content>
+    <br>
+    <span style="color:red;" *ngIf="licencePlate && licencePlate.invalid && licencePlate.touched">Licence plate is not valid</span>
+    <br>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>FuelType:</mat-label>
+        <mat-select formControlName="fuelType">
+          <mat-option *ngFor="let item of enumKeys" [value]="item">{{fuelTypes[item]}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-content>
+      <button mat-button color="primary" [disabled]="reactiveForm.invalid">Add Car</button>
+    </mat-card-content>
+  </form>
+</mat-card>

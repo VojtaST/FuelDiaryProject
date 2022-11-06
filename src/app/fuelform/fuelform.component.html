@@ -1,1 +1,70 @@
-<p>fuelform works!</p>
+<mat-card>
+
+  <mat-card-title>{{title}}</mat-card-title>
+
+  <form [formGroup]="reactiveForm" (ngSubmit)="addFuelRecord(reactiveForm.value)">
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Name of FuelStation:</mat-label>
+        <input matInput id="nameOfFuelStation" formControlName="nameOfFuelStation">
+      </mat-form-field>
+    </mat-card-content>
+    <br>
+    <span style="color:red;" *ngIf="nameOfFuelStation && nameOfFuelStation.invalid && nameOfFuelStation.touched">Name is required</span>
+    <br>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Fuel Amount:</mat-label>
+        <input matInput id="fuelAmount" formControlName="fuelAmount"><br>
+      </mat-form-field>
+    </mat-card-content>
+    <br>
+    <span style="color:red;"
+          *ngIf="fuelAmount && fuelAmount.invalid && fuelAmount.touched">Fuel amount is not valid</span>
+    <br>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Dashboard km:</mat-label>
+        <input matInput id="dashboardKm" formControlName="dashboardKm">
+      </mat-form-field>
+    </mat-card-content>
+    <br>
+    <span style="color:red;"
+          *ngIf="dashboardKm && dashboardKm.invalid && dashboardKm.touched">Dashboard km is not valid</span>
+    <br>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Price per liter:</mat-label>
+        <br>
+        <input matInput id="pricePerLiter" formControlName="pricePerLiter">
+      </mat-form-field>
+    </mat-card-content>
+    <span style="color:red;"
+          *ngIf="pricePerLiter && pricePerLiter.invalid && pricePerLiter.touched">Price is not valid</span>
+    <br>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Total Price:</mat-label>
+        <br>
+        <input matInput id="totalPrice" formControlName="totalPrice">
+      </mat-form-field>
+    </mat-card-content>
+    <span style="color:red;" *ngIf="totalPrice && totalPrice.invalid && totalPrice.touched">Price is not valid</span>
+    <br>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Car:</mat-label>
+        <mat-select formControlName="carId">
+          <mat-option *ngFor="let car of cars" [value]="car.id">
+            {{car.licencePlate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+    <span style="color:red;" *ngIf="totalPrice && totalPrice.invalid && totalPrice.touched">Price is not valid</span>
+    <br>
+    <mat-card-content>
+      <button mat-button color="primary" [disabled]="reactiveForm.invalid">Add Record</button>
+    </mat-card-content>
+  </form>
+</mat-card>
