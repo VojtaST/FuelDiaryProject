@@ -18,6 +18,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {RouterOutlet} from "@angular/router";
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { UserLoginComponent } from './user-login/user-login.component';
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -28,20 +29,21 @@ import { UserLoginComponent } from './user-login/user-login.component';
     UserRegistrationComponent,
     UserLoginComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatInputModule,
-    MatOptionModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    RouterOutlet
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatCardModule,
+        MatInputModule,
+        MatOptionModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        RouterOutlet,
+        MatTableModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

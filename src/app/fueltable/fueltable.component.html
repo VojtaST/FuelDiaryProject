@@ -1,1 +1,42 @@
-<p>fueltable works!</p>
+<mat-card>
+  <table mat-table [dataSource]="fuelRecords" class="mat-elevation-z8 demo-table">
+    <ng-container matColumnDef="nameOfFuelStation">
+      <th mat-header-cell *matHeaderCellDef> Name Of Fuel Station </th>
+      <td mat-cell *matCellDef="let record"> {{record.nameOfFuelStation}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="fuelAmount">
+      <th mat-header-cell *matHeaderCellDef> Fuel Amount </th>
+      <td mat-cell *matCellDef="let record"> {{record.fuelAmount}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateOfRefuel">
+      <th mat-header-cell *matHeaderCellDef> Date Of Refuel </th>
+      <td mat-cell *matCellDef="let record"> {{record.date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dashboardKm">
+      <th mat-header-cell *matHeaderCellDef> Dashboard Km </th>
+      <td mat-cell *matCellDef="let record"> {{record.dashboardKm}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="pricePerLiter">
+      <th mat-header-cell *matHeaderCellDef> Price Per Liter </th>
+      <td mat-cell *matCellDef="let record"> {{record.pricePerLiter}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalPrice">
+      <th mat-header-cell *matHeaderCellDef> Total Price </th>
+      <td mat-cell *matCellDef="let record"> {{record.totalPrice}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fuelTypeField">
+      <th mat-header-cell *matHeaderCellDef> Fuel Type </th>
+      <td mat-cell *matCellDef="let record"> {{fuelTypes[record.fuelTypeField]}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-card>
