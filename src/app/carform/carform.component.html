@@ -5,11 +5,11 @@
     <mat-card-content>
       <mat-form-field appearance="fill">
         <mat-label>Name of the Car:</mat-label>
-        <input matInput id="nameOfCar" formControlName="nameOfCar">
+        <input matInput id="name" formControlName="name">
       </mat-form-field>
     </mat-card-content>
     <br>
-    <span style="color:red;" *ngIf="nameOfCar && nameOfCar.invalid && nameOfCar.touched">Car name is not valid</span>
+    <span style="color:red;" *ngIf="name && name.invalid && name.touched">Car name is not valid</span>
     <br>
     <mat-card-content>
       <mat-form-field appearance="fill">

@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {FuelEntry} from "./fuel-entry";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FuelrecordService {
-  items:FuelEntry[]=[];
+  items: FuelEntry[] = [];
 
-  getFuelEntries()
-  {
-    return this.items;
+  public getFuelEntries(): Observable<FuelEntry[]> {
+
+    return this.http.get<FuelEntry[]>('https://localhost:7235/api/fuelrecords/fuel-records-car?carId=aaaa');
+
   }
-  constructor() { }
+
+  constructor(private http: HttpClient) {
+  }
 }

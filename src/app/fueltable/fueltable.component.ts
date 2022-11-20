@@ -11,15 +11,14 @@ import {FuelType} from "../car";
 export class FueltableComponent implements OnInit {
 
   displayedColumns: string[] = ['nameOfFuelStation', 'fuelAmount', 'dashboardKm', 'pricePerLiter', 'fuelTypeField', 'totalPrice', 'dateOfRefuel'];
-  fuelTypes=FuelType;
+  fuelTypes = FuelType;
 
-  fuelRecords: FuelEntry[] = this.fuelRecordService.getFuelEntries();
-  dataSource = this.fuelRecords;
+  fuelRecords: FuelEntry[] = [];
 
   constructor(private fuelRecordService: FuelrecordService) {
   }
 
   ngOnInit(): void {
+    this.fuelRecordService.getFuelEntries().subscribe((response: FuelEntry[]) => this.fuelRecords = response);
   }
-
 }
