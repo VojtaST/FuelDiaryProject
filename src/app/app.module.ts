@@ -9,7 +9,7 @@ import {CarformComponent} from './carform/carform.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
-import {MatOptionModule} from "@angular/material/core";
+import {MatNativeDateModule, MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
@@ -20,6 +20,7 @@ import {UserRegistrationComponent} from './user-registration/user-registration.c
 import {UserLoginComponent} from './user-login/user-login.component';
 import {MatTableModule} from "@angular/material/table";
 import {HttpClientModule} from "@angular/common/http";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [
@@ -30,22 +31,24 @@ import {HttpClientModule} from "@angular/common/http";
     UserRegistrationComponent,
     UserLoginComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatInputModule,
-    MatOptionModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    RouterOutlet,
-    MatTableModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatCardModule,
+        MatInputModule,
+        MatOptionModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        RouterOutlet,
+        MatTableModule,
+        HttpClientModule,
+        MatDatepickerModule,
+      MatNativeDateModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

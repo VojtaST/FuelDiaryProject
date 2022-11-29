@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Car} from "../car";
 import {FuelEntry} from "../fuel-entry";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Component({
   selector: 'app-fuelform',
@@ -20,8 +20,10 @@ export class FuelformComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.http.get<Car[]>('https://localhost:7235/api/cars/cars-user?userId=3b23416f-142d-4631-9668-21db6a646e94').subscribe({
+    var userId: string = localStorage.getItem('userId')!;
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("userId", userId);
+    this.http.get<Car[]>('https://localhost:7235/api/cars/cars-user', {params: queryParams}).subscribe({
       next: data => {
         this.cars = data as Car[];
       },
@@ -38,10 +40,10 @@ export class FuelformComponent implements OnInit {
       fuelAmount: new FormControl("", [Validators.required, Validators.min(0)]),
       dashboardKm: new FormControl("", [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]),
       carId: new FormControl("", [Validators.required]),
-      totalPrice: new FormControl("", [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")])
+      totalPrice: new FormControl("", [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]),
+      dateOfRefuel:new FormControl("")
     })
     ;
-
 
 
   }
@@ -79,7 +81,7 @@ export class FuelformComponent implements OnInit {
 
     this.http.post<any>('https://localhost:7235/api/fuelrecords/add-fuel-record', {
       "NameOfFuelStation": fuelEntry.nameOfFuelStation,
-      "FuelAmount": fuelEntry.amountLiters,
+      "FuelAmount": fuelEntry.fuelAmount,
       "DashboardKms": fuelEntry.dashboardKm,
       "PricePerLiter": fuelEntry.pricePerLiter,
       "TotalPrice": fuelEntry.totalPrice,
@@ -87,6 +89,7 @@ export class FuelformComponent implements OnInit {
     }, options).subscribe({
       next: data => {
         var postId = data.id;
+        window.location.assign("/fuel-table");
       },
       error: error => {
         //this.errorMessage = error.message;

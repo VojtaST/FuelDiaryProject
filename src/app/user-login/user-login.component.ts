@@ -45,7 +45,9 @@ export class UserLoginComponent implements OnInit {
       "password": user.userPassword
     }, options).subscribe({
       next: data => {
-        var postId = data.id;
+        localStorage.setItem('userId',data.id);
+        localStorage.setItem('token',data.token);
+        window.location.assign("/fuel-table");
       },
       error: error => {
         //this.errorMessage = error.message;

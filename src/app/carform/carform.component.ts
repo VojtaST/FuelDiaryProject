@@ -47,10 +47,11 @@ export class CarformComponent implements OnInit {
       "name": car.name,
       "fuelType": Number(car.fuelType),
       "licencePlate": car.licencePlate,
-
+      "userId": localStorage.getItem('userId')
     }, options).subscribe({
       next: data => {
         var postId = data.id;
+        window.location.assign("/fuel-form");
       },
       error: error => {
         console.error('There was an error!', error);
