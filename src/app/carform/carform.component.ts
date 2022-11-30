@@ -37,10 +37,13 @@ export class CarformComponent implements OnInit {
   addCar(car: Car) {
     window.alert("Car added");
 
+    let  savedToken = localStorage.getItem("token")!;
     let headerss = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': savedToken
     });
+
     let options = {headers: headerss};
 
     this.http.post<any>('https://localhost:7235/api/cars/add-car', {

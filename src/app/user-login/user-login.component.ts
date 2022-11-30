@@ -32,7 +32,6 @@ export class UserLoginComponent implements OnInit {
   }
 
   login(user: User) {
-    window.alert("user logged in");
 
     let headerss = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -46,7 +45,7 @@ export class UserLoginComponent implements OnInit {
     }, options).subscribe({
       next: data => {
         localStorage.setItem('userId',data.id);
-        localStorage.setItem('token',data.token);
+        localStorage.setItem('token',`Bearer ${data.token}`);
         window.location.assign("/fuel-table");
       },
       error: error => {

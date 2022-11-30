@@ -20,10 +20,17 @@ export class FuelformComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let  savedToken = localStorage.getItem("token")!;
+    let headerss = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': savedToken
+    });
+
     var userId: string = localStorage.getItem('userId')!;
     let queryParams = new HttpParams();
     queryParams = queryParams.append("userId", userId);
-    this.http.get<Car[]>('https://localhost:7235/api/cars/cars-user', {params: queryParams}).subscribe({
+    this.http.get<Car[]>('https://localhost:7235/api/cars/cars-user', {params: queryParams,headers:headerss}).subscribe({
       next: data => {
         this.cars = data as Car[];
       },
@@ -73,9 +80,12 @@ export class FuelformComponent implements OnInit {
   }
 
   addFuelRecord(fuelEntry: FuelEntry) {
+
+  let  savedToken = localStorage.getItem("token")!;
     let headerss = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': savedToken
     });
     let options = {headers: headerss};
 
