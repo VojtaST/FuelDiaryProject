@@ -14,9 +14,7 @@ export class FuelformComponent implements OnInit {
   reactiveForm!: FormGroup;
   cars: Car[] = [];
 
-
   constructor(private http: HttpClient) {
-
   }
 
   ngOnInit(): void {
@@ -79,8 +77,7 @@ export class FuelformComponent implements OnInit {
     return this.reactiveForm.get("totalPrice");
   }
 
-  get dateOfRefuel()
-  {
+  get dateOfRefuel() {
     return this.reactiveForm.get("dateOfRefuel");
   }
 
@@ -101,11 +98,10 @@ export class FuelformComponent implements OnInit {
       "PricePerLiter": fuelEntry.pricePerLiter,
       "TotalPrice": fuelEntry.totalPrice,
       "CarId": fuelEntry.carId,
-      "DateOfRefuel":fuelEntry.dateOfRefuel,
-      "UserId":userId
+      "DateOfRefuel": fuelEntry.dateOfRefuel,
+      "UserId": userId
     }, options).subscribe({
       next: data => {
-        var postId = data.id;
         window.location.assign("/fuel-table");
       },
       error: error => {
