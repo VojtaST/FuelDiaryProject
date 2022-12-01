@@ -20,7 +20,7 @@ export class FuelformComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let  savedToken = localStorage.getItem("token")!;
+    let savedToken = localStorage.getItem("token")!;
     let headerss = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
@@ -30,7 +30,10 @@ export class FuelformComponent implements OnInit {
     var userId: string = localStorage.getItem('userId')!;
     let queryParams = new HttpParams();
     queryParams = queryParams.append("userId", userId);
-    this.http.get<Car[]>('https://localhost:7235/api/cars/cars-user', {params: queryParams,headers:headerss}).subscribe({
+    this.http.get<Car[]>('https://localhost:7235/api/cars/cars-user', {
+      params: queryParams,
+      headers: headerss
+    }).subscribe({
       next: data => {
         this.cars = data as Car[];
       },
@@ -48,11 +51,8 @@ export class FuelformComponent implements OnInit {
       dashboardKm: new FormControl("", [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]),
       carId: new FormControl("", [Validators.required]),
       totalPrice: new FormControl("", [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]),
-      dateOfRefuel:new FormControl("")
-    })
-    ;
-
-
+      dateOfRefuel: new FormControl("")
+    });
   }
 
   get nameOfFuelStation() {
@@ -79,9 +79,14 @@ export class FuelformComponent implements OnInit {
     return this.reactiveForm.get("totalPrice");
   }
 
-  addFuelRecord(fuelEntry: FuelEntry) {
+  get dateOfRefuel()
+  {
+    return this.reactiveForm.get("dateOfRefuel");
+  }
 
-  let  savedToken = localStorage.getItem("token")!;
+  addFuelRecord(fuelEntry: FuelEntry) {
+    var userId: string = localStorage.getItem('userId')!;
+    let savedToken = localStorage.getItem("token")!;
     let headerss = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
@@ -95,7 +100,9 @@ export class FuelformComponent implements OnInit {
       "DashboardKms": fuelEntry.dashboardKm,
       "PricePerLiter": fuelEntry.pricePerLiter,
       "TotalPrice": fuelEntry.totalPrice,
-      "CarId": fuelEntry.carId
+      "CarId": fuelEntry.carId,
+      "DateOfRefuel":fuelEntry.dateOfRefuel,
+      "UserId":userId
     }, options).subscribe({
       next: data => {
         var postId = data.id;

@@ -13,7 +13,7 @@
 
     <ng-container matColumnDef="dateOfRefuel">
       <th mat-header-cell *matHeaderCellDef> Date Of Refuel </th>
-      <td mat-cell *matCellDef="let record"> {{record.date}} </td>
+      <td mat-cell *matCellDef="let record"> {{record.dateOfRefuel|date}} </td>
     </ng-container>
 
     <ng-container matColumnDef="dashboardKm">

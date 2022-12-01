@@ -1,5 +1,5 @@
 export class FuelEntry {
-  date:Date;
+  dateOfRefuel:Date;
   nameOfFuelStation:string;
   totalPrice:number;
   pricePerLiter:number;
@@ -7,8 +7,8 @@ export class FuelEntry {
   dashboardKm:number;
   carId:string;
 
-  constructor(date: Date, nameOfFuelStation: string, totalPrice: number, pricePerLiter: number, fuelAmount: number, dashboardKm: number, carId: string) {
-    this.date = date;
+  constructor(dateOfRefuel: Date, nameOfFuelStation: string, totalPrice: number, pricePerLiter: number, fuelAmount: number, dashboardKm: number, carId: string) {
+    this.dateOfRefuel = dateOfRefuel;
     this.nameOfFuelStation = nameOfFuelStation;
     this.totalPrice = totalPrice;
     this.pricePerLiter = pricePerLiter;
