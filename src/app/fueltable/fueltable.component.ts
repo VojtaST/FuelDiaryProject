@@ -4,6 +4,7 @@ import {FuelrecordService} from "../fuelrecord.service";
 import {Car, FuelType} from "../car";
 import {HttpHeaders, HttpParams} from "@angular/common/http";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {CarService} from "../car.service";
 
 @Component({
   selector: 'app-fueltable',
@@ -20,18 +21,18 @@ export class FueltableComponent implements OnInit {
   car: Car | undefined;
 
 
-  constructor(private fuelRecordService: FuelrecordService) {
+  constructor(private fuelRecordService: FuelrecordService, private carService: CarService) {
   }
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
       id: new FormControl()
     });
-    this.fuelRecordService.getCars().subscribe((response: Car[]) => this.cars = response);
+    this.carService.getCars().subscribe((response: Car[]) => this.cars = response);
     this.fuelRecordService.getFuelEntries().subscribe((response: FuelEntry[]) => this.fuelRecords = response);
   }
 
-  getSelected(car:Car) {
+  getSelected(car: Car) {
     this.fuelRecordService.getFuelEntriesCarId(car.id).subscribe((response: FuelEntry[]) => this.fuelRecords = response);
   }
 }

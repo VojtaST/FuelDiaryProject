@@ -4,6 +4,7 @@ import {FuelEntry} from "../fuel-entry";
 import {FuelrecordService} from "../fuelrecord.service";
 import {Car} from "../car";
 import {FormControl, FormGroup} from "@angular/forms";
+import {CarService} from "../car.service";
 
 @Component({
   selector: 'app-chartpage',
@@ -21,15 +22,15 @@ export class ChartpageComponent implements OnInit {
   selected = new FormControl();
   cars: Car[] = [];
 
-  constructor(private fuelRecordService: FuelrecordService) {
+  constructor(private fuelRecordService: FuelrecordService, private carService: CarService) {
   }
 
   async ngOnInit() {
     this.reactiveForm = new FormGroup({
       id: new FormControl()
     });
-    this.fuelRecordService.getCars().subscribe((response: Car[]) => this.cars = response);
-
+    this.carService.getCars().subscribe((response: Car[]) => this.cars = response);
+    await this.getSelectedCarsCharts(this.cars[0]);
   }
 
   createChartTotalPrice(dataChart: number[], labelsChart: string[]) {
@@ -107,6 +108,6 @@ export class ChartpageComponent implements OnInit {
     this.createChartTotalPrice(this.fuelRecords.map((o) => o.totalPrice), this.fuelRecords.map((o) => o.dateOfRefuel.toString()));
     this.createChartMileage(this.fuelRecords.map((o) => o.dashboardKm), this.fuelRecords.map((o) => o.dateOfRefuel.toString()));
     this.createChartPricePerLiter(this.fuelRecords.map((o) => o.pricePerLiter), this.fuelRecords.map((o) => o.dateOfRefuel.toString()));
-    this.createChartTotalLiters(this.fuelRecords.map((o) => o.totalPrice), this.fuelRecords.map((o) => o.dateOfRefuel.toString()));
+    this.createChartTotalLiters(this.fuelRecords.map((o) => o.fuelAmount), this.fuelRecords.map((o) => o.dateOfRefuel.toString()));
   }
 }

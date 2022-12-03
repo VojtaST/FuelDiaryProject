@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserRegistration} from "../user-registration";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-user-registration',
@@ -12,7 +12,7 @@ export class UserRegistrationComponent implements OnInit {
   title = "User Registration";
   reactiveForm!: FormGroup;
 
-  constructor(private http: HttpClient) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -46,28 +46,6 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   sendRegister(userRegister: UserRegistration) {
-    window.alert("FuelRecord added");
-
-    let headerss = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    });
-    let options = {headers: headerss};
-
-    this.http.post<any>('https://localhost:7235/api/users/register', {
-      "username": userRegister.userName,
-      "password": userRegister.userPassword,
-      "firstName": userRegister.userFirstName,
-      "surname": userRegister.userLastName,
-      "email": userRegister.userEmail
-    }, options).subscribe({
-      next: data => {
-        var postId = data.id;
-      },
-      error: error => {
-        //this.errorMessage = error.message;
-        console.error('There was an error!', error);
-      }
-    })
+    this.userService.sendRegister(userRegister);
   }
 }
