@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Car} from "../car";
 import {FuelEntry} from "../fuel-entry";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {FuelrecordService} from "../fuelrecord.service";
+import {CarService} from "../car.service";
 
 @Component({
   selector: 'app-fuelform',
@@ -14,33 +16,11 @@ export class FuelformComponent implements OnInit {
   reactiveForm!: FormGroup;
   cars: Car[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private fuelService: FuelrecordService, private carService: CarService) {
   }
 
   ngOnInit(): void {
-    let savedToken = localStorage.getItem("token")!;
-    let headerss = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Authorization': savedToken
-    });
-
-    var userId: string = localStorage.getItem('userId')!;
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("userId", userId);
-    this.http.get<Car[]>('https://localhost:7235/api/cars/cars-user', {
-      params: queryParams,
-      headers: headerss
-    }).subscribe({
-      next: data => {
-        this.cars = data as Car[];
-      },
-      error: error => {
-        //this.errorMessage = error.message;
-        console.error('There was an error!', error);
-      }
-    });
-
+    this.carService.getCars().subscribe((response: Car[]) => this.cars = response);
 
     this.reactiveForm = new FormGroup({
       nameOfFuelStation: new FormControl("", Validators.required),
@@ -82,33 +62,6 @@ export class FuelformComponent implements OnInit {
   }
 
   addFuelRecord(fuelEntry: FuelEntry) {
-    var userId: string = localStorage.getItem('userId')!;
-    let savedToken = localStorage.getItem("token")!;
-    let headerss = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Authorization': savedToken
-    });
-    let options = {headers: headerss};
-
-    this.http.post<any>('https://localhost:7235/api/fuelrecords/add-fuel-record', {
-      "NameOfFuelStation": fuelEntry.nameOfFuelStation,
-      "FuelAmount": fuelEntry.fuelAmount,
-      "DashboardKms": fuelEntry.dashboardKm,
-      "PricePerLiter": fuelEntry.pricePerLiter,
-      "TotalPrice": fuelEntry.totalPrice,
-      "CarId": fuelEntry.carId,
-      "DateOfRefuel": fuelEntry.dateOfRefuel,
-      "UserId": userId
-    }, options).subscribe({
-      next: data => {
-        window.location.assign("/fuel-table");
-      },
-      error: error => {
-        //this.errorMessage = error.message;
-        console.error('There was an error!', error);
-      }
-    })
-
+    this.fuelService.addFuelRecord(fuelEntry);
   }
 }

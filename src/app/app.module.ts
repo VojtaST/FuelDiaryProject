@@ -21,6 +21,7 @@ import {UserLoginComponent} from './user-login/user-login.component';
 import {MatTableModule} from "@angular/material/table";
 import {HttpClientModule} from "@angular/common/http";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import { ChartpageComponent } from './chartpage/chartpage.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     FueltableComponent,
     CarformComponent,
     UserRegistrationComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    ChartpageComponent
   ],
     imports: [
         BrowserModule,

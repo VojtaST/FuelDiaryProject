@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../user";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-user-login',
@@ -13,7 +14,7 @@ export class UserLoginComponent implements OnInit {
   title = "Login";
   reactiveForm!: FormGroup;
 
-  constructor(private http:HttpClient) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -32,26 +33,6 @@ export class UserLoginComponent implements OnInit {
   }
 
   login(user: User) {
-
-    let headerss = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    });
-    let options = {headers: headerss};
-
-    this.http.post<any>('https://localhost:7235/api/users/login', {
-      "username": user.userName,
-      "password": user.userPassword
-    }, options).subscribe({
-      next: data => {
-        localStorage.setItem('userId',data.id);
-        localStorage.setItem('token',`Bearer ${data.token}`);
-        window.location.assign("/fuel-table");
-      },
-      error: error => {
-        //this.errorMessage = error.message;
-        console.error('There was an error!', error);
-      }
-    })
+    this.userService.loginUser(user);
   }
 }

@@ -1,0 +1,17 @@
+.chart-container
+{
+align-content: center;
+
+}
+.wrapper {
+height: 1000px;
+}
+.first {
+  display: inline-block;
+
+width: 50%;
+}
+.second {
+  display: inline-block;
+  width: 50%;
+}

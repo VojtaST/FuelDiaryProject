@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Car, FuelType} from "../car";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {CarService} from "../car.service";
 
 @Component({
   selector: 'app-carform',
@@ -14,7 +15,7 @@ export class CarformComponent implements OnInit {
   fuelTypes = FuelType;
   enumKeys: any[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private carService: CarService) {
     this.enumKeys = Object.keys(this.fuelTypes).filter(f => !isNaN(Number(f)));
   }
 
@@ -35,31 +36,6 @@ export class CarformComponent implements OnInit {
   }
 
   addCar(car: Car) {
-    window.alert("Car added");
-
-    let  savedToken = localStorage.getItem("token")!;
-    let headerss = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Authorization': savedToken
-    });
-
-    let options = {headers: headerss};
-
-    this.http.post<any>('https://localhost:7235/api/cars/add-car', {
-      "name": car.name,
-      "fuelType": Number(car.fuelType),
-      "licencePlate": car.licencePlate,
-      "userId": localStorage.getItem('userId')
-    }, options).subscribe({
-      next: data => {
-        var postId = data.id;
-        window.location.assign("/fuel-form");
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
-
+    this.carService.addCar(car);
   }
 }

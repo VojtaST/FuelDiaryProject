@@ -10,46 +10,58 @@ import {Car} from "./car";
 export class FuelrecordService {
   items: FuelEntry[] = [];
   cars: Car[] = [];
-
-  public getFuelEntries(): Observable<FuelEntry[]> {
-    let savedToken = localStorage.getItem("token")!;
-    let userId = localStorage.getItem("userId")!;
-    let headerss = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Authorization': savedToken
-    });
-    return this.http.get<FuelEntry[]>(`https://localhost:7235/api/fuelrecords/fuel-records-user?userId=${userId}`, {headers: headerss});
-  }
-
-  public getCars(): Observable<Car[]> {
-    let savedToken = localStorage.getItem("token")!;
-    let headerss = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Authorization': savedToken
-    });
-
-    var userId: string = localStorage.getItem('userId')!;
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("userId", userId);
-   return this.http.get<Car[]>('https://localhost:7235/api/cars/cars-user', {
-      params: queryParams,
-      headers: headerss
-    });
-
-  }
+  token: string = "";
+  userId: string = ""
 
   constructor(private http: HttpClient) {
+    this.token = localStorage.getItem("token")!;
+    this.userId = localStorage.getItem("userId")!;
   }
 
-  getFuelEntriesCarId(id: string):Observable<FuelEntry[]> {
-    let savedToken = localStorage.getItem("token")!;
+  public getFuelEntries(): Observable<FuelEntry[]> {
+
     let headerss = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'Authorization': savedToken
+      'Authorization': this.token
+    });
+    return this.http.get<FuelEntry[]>(`https://localhost:7235/api/fuelrecords/fuel-records-user?userId=${this.userId}`, {headers: headerss});
+  }
+
+  getFuelEntriesCarId(id: string): Observable<FuelEntry[]> {
+    let headerss = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': this.token
     });
     return this.http.get<FuelEntry[]>(`https://localhost:7235/api/fuelrecords/fuel-records-car?carId=${id}`, {headers: headerss});
+  }
+
+  addFuelRecord(fuelEntry: FuelEntry) {
+    let headerss = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': this.token
+    });
+    let options = {headers: headerss};
+
+    this.http.post<any>('https://localhost:7235/api/fuelrecords/add-fuel-record', {
+      "NameOfFuelStation": fuelEntry.nameOfFuelStation,
+      "FuelAmount": fuelEntry.fuelAmount,
+      "DashboardKms": fuelEntry.dashboardKm,
+      "PricePerLiter": fuelEntry.pricePerLiter,
+      "TotalPrice": fuelEntry.totalPrice,
+      "CarId": fuelEntry.carId,
+      "DateOfRefuel": fuelEntry.dateOfRefuel,
+      "UserId": this.userId
+    }, options).subscribe({
+      next: data => {
+        window.location.assign("/fuel-table");
+      },
+      error: error => {
+        //this.errorMessage = error.message;
+        console.error('There was an error!', error);
+      }
+    })
   }
 }
