@@ -13,7 +13,7 @@ import {CarService} from "../car.service";
 })
 export class FueltableComponent implements OnInit {
   reactiveForm!: FormGroup;
-  displayedColumns: string[] = ['nameOfFuelStation', 'fuelAmount', 'dashboardKm', 'pricePerLiter', 'fuelTypeField', 'totalPrice', 'dateOfRefuel'];
+  displayedColumns: string[] = ['nameOfFuelStation', 'fuelAmount', 'dashboardKm', 'pricePerLiter', 'totalPrice', 'dateOfRefuel'];
   fuelTypes = FuelType;
   selected = new FormControl();
   fuelRecords: FuelEntry[] = [];
