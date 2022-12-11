@@ -5,6 +5,7 @@ import {FuelrecordService} from "../fuelrecord.service";
 import {Car} from "../car";
 import {FormControl, FormGroup} from "@angular/forms";
 import {CarService} from "../car.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-chartpage',
@@ -22,7 +23,7 @@ export class ChartpageComponent implements OnInit {
   selected = new FormControl();
   cars: Car[] = [];
 
-  constructor(private fuelRecordService: FuelrecordService, private carService: CarService) {
+  constructor(private fuelRecordService: FuelrecordService, private carService: CarService, private toastr: ToastrService) {
   }
 
   async ngOnInit() {
@@ -104,7 +105,21 @@ export class ChartpageComponent implements OnInit {
   }
 
   async getSelectedCarsCharts(car: Car) {
-    await this.fuelRecordService.getFuelEntriesCarId(car.id).subscribe((response: FuelEntry[]) => this.fuelRecords = response);
+    await this.fuelRecordService.getFuelEntriesCarId(car.id).subscribe({
+      next: data => {
+        this.fuelRecords = data;
+        this.toastr.success("Data načtena ");
+      },
+      error: error => {
+        if (error.status == 401) {
+          this.toastr.error("Neautorizovaný přístup ", error.status);
+        } else {
+          this.toastr.error("Chybka :) ", error.status);
+        }
+      }
+    });
+
+
     this.createChartTotalPrice(this.fuelRecords.map((o) => o.totalPrice), this.fuelRecords.map((o) => o.dateOfRefuel.toString()));
     this.createChartMileage(this.fuelRecords.map((o) => o.dashboardKm), this.fuelRecords.map((o) => o.dateOfRefuel.toString()));
     this.createChartPricePerLiter(this.fuelRecords.map((o) => o.pricePerLiter), this.fuelRecords.map((o) => o.dateOfRefuel.toString()));

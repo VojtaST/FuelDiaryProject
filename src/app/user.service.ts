@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserRegistration} from "./user-registration";
 import {User} from "./user";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   sendRegister(userRegister: UserRegistration) {
@@ -29,10 +30,14 @@ export class UserService {
         window.location.assign("/fuel-table");
         localStorage.setItem('userId', data.id);
         localStorage.setItem('token', `Bearer ${data.token}`);
+        this.toastr.success("Uživatel zaregistrován ");
       },
       error: error => {
-        //this.errorMessage = error.message;
-        console.error('There was an error!', error);
+        if (error.status == 401) {
+          this.toastr.error("Neautorizovaný přístup ", error.status);
+        } else {
+          this.toastr.error("Chybka :) ", error.status);
+        }
       }
     });
   }
@@ -52,10 +57,15 @@ export class UserService {
         localStorage.setItem('userId', data.id);
         localStorage.setItem('token', `Bearer ${data.token}`);
         window.location.assign("/fuel-table");
+        this.toastr.success("Uživatel přihlášen ");
+        if(data==null) this.toastr.error("Neplatné přihlašovací údaje.")
       },
       error: error => {
-        //this.errorMessage = error.message;
-        console.error('There was an error!', error);
+        if (error.status == 401) {
+          this.toastr.error("Neautorizovaný přístup ", error.status);
+        } else {
+          this.toastr.error("Chybka :) ", error.status);
+        }
       }
     })
   }

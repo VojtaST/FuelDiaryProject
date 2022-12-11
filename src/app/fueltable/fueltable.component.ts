@@ -5,6 +5,7 @@ import {Car, FuelType} from "../car";
 import {HttpHeaders, HttpParams} from "@angular/common/http";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CarService} from "../car.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-fueltable',
@@ -21,18 +22,53 @@ export class FueltableComponent implements OnInit {
   car: Car | undefined;
 
 
-  constructor(private fuelRecordService: FuelrecordService, private carService: CarService) {
+  constructor(private fuelRecordService: FuelrecordService, private carService: CarService, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
       id: new FormControl()
     });
-    this.carService.getCars().subscribe((response: Car[]) => this.cars = response);
-    this.fuelRecordService.getFuelEntries().subscribe((response: FuelEntry[]) => this.fuelRecords = response);
+    this.carService.getCars().subscribe({
+      next: data => {
+        this.cars = data
+      },
+      error: error => {
+        if (error.status == 401) {
+          this.toastr.error("Neautorizovaný přístup ", error.status);
+        } else {
+          this.toastr.error("Chybka :) ", error.status);
+        }
+      }
+    });
+
+    this.fuelRecordService.getFuelEntries().subscribe({
+      next: data => {
+        this.fuelRecords = data
+      },
+      error: error => {
+        if (error.status == 401) {
+          this.toastr.error("Neautorizovaný přístup ", error.status);
+        } else {
+          this.toastr.error("Chybka :) ", error.status);
+        }
+      }
+    });
   }
 
   getSelected(car: Car) {
-    this.fuelRecordService.getFuelEntriesCarId(car.id).subscribe((response: FuelEntry[]) => this.fuelRecords = response);
+    this.fuelRecordService.getFuelEntriesCarId(car.id).subscribe({
+      next: data => {
+        this.fuelRecords = data
+        this.toastr.success("Data Načtena ");
+      },
+      error: error => {
+        if (error.status == 401) {
+          this.toastr.error("Neautorizovaný přístup ", error.status);
+        } else {
+          this.toastr.error("Chybka :) ", error.status);
+        }
+      }
+    });
   }
 }

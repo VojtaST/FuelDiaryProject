@@ -21,7 +21,8 @@ import {UserLoginComponent} from './user-login/user-login.component';
 import {MatTableModule} from "@angular/material/table";
 import {HttpClientModule} from "@angular/common/http";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import { ChartpageComponent } from './chartpage/chartpage.component';
+import {ChartpageComponent} from './chartpage/chartpage.component';
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -33,24 +34,25 @@ import { ChartpageComponent } from './chartpage/chartpage.component';
     UserLoginComponent,
     ChartpageComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatCardModule,
-        MatInputModule,
-        MatOptionModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        AppRoutingModule,
-        MatToolbarModule,
-        RouterOutlet,
-        MatTableModule,
-        HttpClientModule,
-        MatDatepickerModule,
-      MatNativeDateModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    AppRoutingModule,
+    MatToolbarModule,
+    RouterOutlet,
+    MatTableModule,
+    HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ToastrModule.forRoot(),
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
