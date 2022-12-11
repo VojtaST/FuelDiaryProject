@@ -3,6 +3,7 @@ import {FuelEntry} from "./fuel-entry";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Car} from "./car";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class FuelrecordService {
   token: string = "";
   userId: string = ""
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
     this.token = localStorage.getItem("token")!;
     this.userId = localStorage.getItem("userId")!;
   }
@@ -56,6 +57,7 @@ export class FuelrecordService {
       "UserId": this.userId
     }, options).subscribe({
       next: data => {
+        this.toastr.success("Záznam přidán");
         window.location.assign("/fuel-table");
       },
       error: error => {
