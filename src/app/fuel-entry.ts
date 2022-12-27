@@ -1,13 +1,14 @@
 export class FuelEntry {
-  dateOfRefuel:Date;
-  nameOfFuelStation:string;
-  totalPrice:number;
-  pricePerLiter:number;
-  fuelAmount:number;
-  dashboardKm:number;
-  carId:string;
+  id: string;
+  dateOfRefuel: Date;
+  nameOfFuelStation: string;
+  totalPrice: number;
+  pricePerLiter: number;
+  fuelAmount: number;
+  dashboardKm: number;
+  carId: string;
 
-  constructor(dateOfRefuel: Date, nameOfFuelStation: string, totalPrice: number, pricePerLiter: number, fuelAmount: number, dashboardKm: number, carId: string) {
+  constructor(id: string, dateOfRefuel: Date, nameOfFuelStation: string, totalPrice: number, pricePerLiter: number, fuelAmount: number, dashboardKm: number, carId: string) {
     this.dateOfRefuel = dateOfRefuel;
     this.nameOfFuelStation = nameOfFuelStation;
     this.totalPrice = totalPrice;
@@ -15,5 +16,6 @@ export class FuelEntry {
     this.fuelAmount = fuelAmount;
     this.dashboardKm = dashboardKm;
     this.carId = carId;
+    this.id=id;
   }
 }

@@ -23,6 +23,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ChartpageComponent} from './chartpage/chartpage.component';
 import {ToastrModule} from "ngx-toastr";
+import { FuelformeditComponent } from './fuelformedit/fuelformedit.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {ToastrModule} from "ngx-toastr";
     CarformComponent,
     UserRegistrationComponent,
     UserLoginComponent,
-    ChartpageComponent
+    ChartpageComponent,
+    FuelformeditComponent
   ],
   imports: [
     BrowserModule,
