@@ -66,4 +66,43 @@ export class FuelrecordService {
       }
     })
   }
+
+  getFuelEntry(id: string):Observable<FuelEntry> {
+    let headerss = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': this.token
+    });
+    return this.http.get<FuelEntry>(`https://localhost:7235/api/fuelrecords/${id}`, {headers: headerss});
+
+  }
+
+  editFuelRecord(fuelEntry: FuelEntry) {
+    let headerss = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': this.token
+    });
+    let options = {headers: headerss};
+
+    this.http.put<any>(`https://localhost:7235/api/fuelrecords/${fuelEntry.id}/edit`, {
+      "NameOfFuelStation": fuelEntry.nameOfFuelStation,
+      "FuelAmount": fuelEntry.fuelAmount,
+      "DashboardKms": fuelEntry.dashboardKm,
+      "PricePerLiter": fuelEntry.pricePerLiter,
+      "TotalPrice": fuelEntry.totalPrice,
+      "CarId": fuelEntry.carId,
+      "DateOfRefuel": fuelEntry.dateOfRefuel,
+      "idasdf":fuelEntry.id
+    }, options).subscribe({
+      next: data => {
+        this.toastr.success("Záznam přidán");
+        window.location.assign("/fuel-table");
+      },
+      error: error => {
+        //this.errorMessage = error.message;
+        console.error('There was an error!', error);
+      }
+    })
+  }
 }

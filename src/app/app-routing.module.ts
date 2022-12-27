@@ -6,6 +6,7 @@ import {UserRegistrationComponent} from "./user-registration/user-registration.c
 import {UserLoginComponent} from "./user-login/user-login.component";
 import {FueltableComponent} from "./fueltable/fueltable.component";
 import {ChartpageComponent} from "./chartpage/chartpage.component";
+import {FuelformeditComponent} from "./fuelformedit/fuelformedit.component";
 
 const routes: Routes = [
   {path: 'car-form', component: CarformComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'fuel-table', component: FueltableComponent},
   {path: 'register', component: UserRegistrationComponent},
   {path: 'login', component: UserLoginComponent},
-  {path: 'chartpage', component: ChartpageComponent}
+  {path: 'chartpage', component: ChartpageComponent},
+  {path: ':id/fuel-form-edit', component: FuelformeditComponent}
 ];
 
 @NgModule({

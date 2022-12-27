@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Car} from "../car";
 import {FuelEntry} from "../fuel-entry";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {FuelrecordService} from "../fuelrecord.service";
 import {CarService} from "../car.service";
 
