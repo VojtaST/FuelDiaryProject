@@ -4,9 +4,8 @@ import {Car} from "../car";
 import {FuelrecordService} from "../fuelrecord.service";
 import {CarService} from "../car.service";
 import {FuelEntry} from "../fuel-entry";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {firstValueFrom} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
+
 
 @Component({
   selector: 'app-fuelformedit',
@@ -21,14 +20,13 @@ export class FuelformeditComponent implements OnInit {
   fuelEntry!: FuelEntry;
   recordId!: string;
 
-  constructor(private toastr: ToastrService, private fuelService: FuelrecordService, private carService: CarService, private route: ActivatedRoute, private router: Router) {
+  constructor(private fuelService: FuelrecordService, private carService: CarService, private route: ActivatedRoute) {
   }
 
   async ngOnInit(): Promise<void> {
     this.recordId = this.route.snapshot.paramMap.get('id') || '';
     this.carService.getCars().subscribe((response: Car[]) => this.cars = response);
 
-    //await this.fuelService.getFuelEntry(this.recordId).toPromise().subscribe((response: FuelEntry) => this.fuelEntry = response);
     var fuelRecordEntry = await (this.fuelService.getFuelEntry(this.recordId)).toPromise();
 
     this.reactiveForm = new FormGroup({
@@ -41,8 +39,6 @@ export class FuelformeditComponent implements OnInit {
       totalPrice: new FormControl(fuelRecordEntry?.totalPrice, [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]),
       dateOfRefuel: new FormControl(fuelRecordEntry?.dateOfRefuel)
     });
-
-
   }
 
   get nameOfFuelStation() {

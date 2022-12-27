@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FuelEntry} from "../fuel-entry";
 import {FuelrecordService} from "../fuelrecord.service";
-import {Car, FuelType} from "../car";
-import {HttpHeaders, HttpParams} from "@angular/common/http";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Car} from "../car";
+import {FormControl, FormGroup} from "@angular/forms";
 import {CarService} from "../car.service";
 import {ToastrService} from "ngx-toastr";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-fueltable',
@@ -16,14 +14,13 @@ import {Router} from "@angular/router";
 export class FueltableComponent implements OnInit {
   reactiveForm!: FormGroup;
   displayedColumns: string[] = ['nameOfFuelStation', 'fuelAmount', 'dashboardKm', 'pricePerLiter', 'totalPrice', 'dateOfRefuel', 'actions'];
-  fuelTypes = FuelType;
   selected = new FormControl();
   fuelRecords: FuelEntry[] = [];
   cars: Car[] = [];
   car: Car | undefined;
 
 
-  constructor(private fuelRecordService: FuelrecordService, private carService: CarService, private toastr: ToastrService, private router: Router) {
+  constructor(private fuelRecordService: FuelrecordService, private carService: CarService, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
