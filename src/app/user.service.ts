@@ -35,8 +35,10 @@ export class UserService {
       error: error => {
         if (error.status == 401) {
           this.toastr.error("Neautorizovaný přístup ", error.status);
+        } else if (error.status == 404) {
+          this.toastr.error("Neplatný uživatel ", error.status);
         } else {
-          this.toastr.error("Chybka :) ", error.status);
+          this.toastr.error("Špatné heslo ", error.status);
         }
       }
     });
@@ -58,13 +60,15 @@ export class UserService {
         localStorage.setItem('token', `Bearer ${data.token}`);
         window.location.assign("/fuel-table");
         this.toastr.success("Uživatel přihlášen ");
-        if(data==null) this.toastr.error("Neplatné přihlašovací údaje.")
+        if (data == null) this.toastr.error("Neplatné přihlašovací údaje.")
       },
       error: error => {
         if (error.status == 401) {
           this.toastr.error("Neautorizovaný přístup ", error.status);
+        }else if (error.status == 404) {
+          this.toastr.error("Neplatný uživatel ", error.status);
         } else {
-          this.toastr.error("Chybka :) ", error.status);
+          this.toastr.error("Špatné heslo ", error.status);
         }
       }
     })
