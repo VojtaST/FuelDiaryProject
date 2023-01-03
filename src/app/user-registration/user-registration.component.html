@@ -2,6 +2,9 @@
   <mat-card-title>{{title}}</mat-card-title>
 
   <form [formGroup]="reactiveForm" (ngSubmit)="sendRegister(reactiveForm.value)">
+     <span style="color:red;"
+           *ngIf="userName && userName.invalid && userName.touched">This username is required</span>
+    <br>
     <mat-card-content>
       <mat-form-field appearance="fill">
         <mat-label>Username:</mat-label>
@@ -9,8 +12,7 @@
       </mat-form-field>
     </mat-card-content>
     <br>
-    <span style="color:red;"
-          *ngIf="userName && userName.invalid && userName.touched">This username is aleready taken</span>
+    <span style="color:red;" *ngIf="userFirstName && userFirstName.invalid && userFirstName.touched">First name is not valid</span>
     <br>
     <mat-card-content>
       <mat-form-field appearance="fill">
@@ -19,7 +21,8 @@
       </mat-form-field>
     </mat-card-content>
     <br>
-    <span style="color:red;" *ngIf="userFirstName && userFirstName.invalid && userFirstName.touched">First name is not valid</span>
+    <span style="color:red;"
+          *ngIf="userSurname && userSurname.invalid && userSurname.touched">Surname is not valid</span>
     <br>
     <mat-card-content>
       <mat-form-field appearance="fill">
@@ -29,7 +32,7 @@
     </mat-card-content>
     <br>
     <span style="color:red;"
-          *ngIf="userSurname && userSurname.invalid && userSurname.touched">Surname is not valid</span>
+          *ngIf="userPassword && userPassword.invalid && userPassword.touched">Password is not valid</span>
     <br>
     <mat-card-content>
       <mat-form-field appearance="fill">
@@ -38,8 +41,7 @@
       </mat-form-field>
     </mat-card-content>
     <br>
-    <span style="color:red;"
-          *ngIf="userPassword && userPassword.invalid && userPassword.touched">Password is not valid</span>
+    <span style="color:red;" *ngIf="userEmail && userEmail.invalid && userEmail.touched">Email is not valid    </span>
     <br>
     <mat-card-content>
       <mat-form-field appearance="fill">
@@ -48,8 +50,7 @@
       </mat-form-field>
     </mat-card-content>
     <br>
-    <span style="color:red;" *ngIf="userEmail && userEmail.invalid && userEmail.touched">Email is not valid    </span>
-    <br>
+
     <mat-card-content>
       <button mat-button color="primary" [disabled]="reactiveForm.invalid">Register</button>
     </mat-card-content>
