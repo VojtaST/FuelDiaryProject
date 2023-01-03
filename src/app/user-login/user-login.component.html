@@ -2,6 +2,9 @@
   <mat-card-title>{{title}}</mat-card-title>
 
   <form [formGroup]="reactiveForm" (ngSubmit)="login(reactiveForm.value)">
+    <span style="color:red;"
+          *ngIf="userName && userName.invalid && userName.touched">Username is required</span>
+    <br>
     <mat-card-content>
       <mat-form-field appearance="fill">
         <mat-label>Username:</mat-label>
@@ -10,7 +13,7 @@
     </mat-card-content>
     <br>
     <span style="color:red;"
-          *ngIf="userName && userName.invalid && userName.touched">Username is required</span>
+          *ngIf="userPassword && userPassword.invalid && userPassword.touched">Password required</span>
     <br>
     <mat-card-content>
       <mat-form-field appearance="fill">
@@ -19,9 +22,7 @@
       </mat-form-field>
     </mat-card-content>
     <br>
-    <span style="color:red;"
-          *ngIf="userPassword && userPassword.invalid && userPassword.touched">Password required</span>
-    <br>
+
 
     <mat-card-content>
       <button mat-button color="primary" [disabled]="reactiveForm.invalid">Login</button>
